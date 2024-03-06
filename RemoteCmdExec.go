@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"html/template"
 	"log"
@@ -140,8 +141,11 @@ func handleRun(w http.ResponseWriter, r *http.Request, config Config) {
 }
 
 func main() {
-	configPath := "config.yaml"
-	config, err := loadConfig(configPath)
+	configPath := flag.String("c", "config.yaml", "Path to the configuration file")
+	flag.Parse()
+
+	config, err := loadConfig(*configPath)
+
 	if err != nil {
 		log.Fatalf("Error loading configuration: %v", err)
 	}
